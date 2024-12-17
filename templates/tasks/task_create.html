@@ -1,0 +1,32 @@
+{% extends "bases/task.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block head %}
+
+{% endblock head %}
+
+{% block title %}
+Task Create
+{% endblock title %}
+- TaskSys
+
+{% block content %}
+<header>
+    links:
+
+    <a href="">New Task</a>
+</header>
+<main style="width: 100%;height: 100dvh; display: flex;justify-content: center;align-items: center;flex-direction: column;">
+    <h1>Task Create</h1>
+    <section style="display: flex;flex-direction: column;gap: 10px;">
+    <form action="{% url 'task_create_view' %}" method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-success" value="Add Task">
+    </form>
+    </section>
+</main>
+    
+
+{% endblock content %}

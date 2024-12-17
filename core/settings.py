@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -24,9 +26,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.accounts",
-    "apps.tasks"
+    "accounts",
+    "tasks",
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -43,7 +51,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR.joinpath('templates', 'pages')],
+        "DIRS": [BASE_DIR.joinpath("templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -92,7 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "pt-PT"
+LANGUAGE_CODE = "en-US"
 
 TIME_ZONE = "Africa/Luanda"
 
@@ -105,17 +113,42 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR.joinpath('templates', 'assets'), ]
-STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
+STATICFILES_DIRS = [
+    BASE_DIR.joinpath("assets"),
+]
+STATIC_ROOT = BASE_DIR.joinpath("staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+LOGIN_REDIRECT_URL = reverse_lazy("tasks_view")
+LOGIN_URL = reverse_lazy("login")
 
-# EMAIL
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple", 
+        },
+    },
+    "loggers": {
+        "": {  
+            "level": "DEBUG", 
+            "handlers": ["console"],  
+        },
+    },
+    "formatters": {
+        "simple": {
+            "format": "{asctime} - {levelname} - {name} - {message}",  # Formato detalhado
+            "style": "{",
+        },
+    },
+}
 
 
-# CELERY
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

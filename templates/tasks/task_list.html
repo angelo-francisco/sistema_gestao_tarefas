@@ -1,0 +1,42 @@
+{% extends "bases/task.html" %}
+
+{% load static %}
+
+{% block head %}
+
+{% endblock head %}
+
+{% block title %}
+Task List
+{% endblock title %}
+- TaskSys
+
+{% block content %}
+<header>
+    links:
+
+    <a href="{% url 'task_create_view' %}">New Task</a>
+</header>
+<main style="width: 100%;height: 100dvh; display: flex;justify-content: center;align-items: center;flex-direction: column;">
+    <h1>Task List</h1>
+    <section style="display: flex;flex-direction: column;gap: 10px;">
+    {% for query in tasks %}
+        <div class="card" style="padding: 10px;display: flex;justify-content: space-between;flex-direction: row;gap: 20px;">
+            <span>
+                <input type="checkbox" class="form-check-input">
+                {{ query.title }}
+            </span>
+            <div>
+                <a href="{% url 'task_delete_view' query.uid %}">Delete</a>
+                <a href="">See</a>
+            </div>
+
+        </div>
+        {% empty %}
+        <p>No tasks...</p>
+        {% endfor %}
+    </section>
+</main>
+    
+
+{% endblock content %}

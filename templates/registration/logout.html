@@ -1,0 +1,28 @@
+{% extends 'bases/base.html' %}
+{% load static %}
+
+
+{% block head %}
+    
+{% endblock head %}
+    
+
+{% block title %} 
+    {{title}}
+{% endblock title %}
+
+{% block content %}
+    <h1>LogOut</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Are you sure about finish your session?</p>
+
+        <div>
+            <input type="submit" value="Cancel" class="btn btn-gray">
+            <input type="submit" value="Logout" class="btn btn-danger">
+        </div>
+
+    </form>
+{% endblock content %}
+    
