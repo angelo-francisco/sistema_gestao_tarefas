@@ -1,0 +1,40 @@
+{% for query in tasks %}
+<div class="card" id="card-{{query.uid}}" style="
+                padding: 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                background-color: #f9f9f9;
+            ">
+    <span style="display: flex; align-items: center; gap: 10px;">
+        <input type="checkbox" class="form-check-input" style="cursor: pointer;"
+            hx-post="{% url 'check_task' query.uid %}" hx-target="#all_tasks"
+            {% if query.status %} checked {% endif %}>
+        <strong 
+        {% if query.status %}
+            style="text-decoration: line-through;color: gray;font-style: italic;"
+        {% endif %}
+            >{{ query.title }}</strong>
+    </span>
+    <div style="display: flex; gap: 10px;">
+        
+        {% if not query.status %}
+
+        <a href="{% url 'task_detail_view' query.uid %}"
+            style="text-decoration: none; color: #007bff; font-weight: bold;">
+            See
+        </a>
+            
+        {% endif %}
+        <a href="{% url 'task_delete_view' query.uid %}"
+            style="text-decoration: none; color: #dc3545; font-weight: bold;">
+            Delete
+        </a>
+    </div>
+</div>
+{% empty %}
+<p style="color: #555;text-align: center;">No tasks available. Create a new one!</p>
+{% endfor %}

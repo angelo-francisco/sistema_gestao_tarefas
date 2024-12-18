@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*bb9%@_(1!&p02f&=3r^vlw^(##hv=oq#luj(#r093@@m%cfzz"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -138,7 +138,7 @@ LOGGING = {
     },
     "loggers": {
         "": {  
-            "level": "DEBUG", 
+            "level": "INFO", 
             "handlers": ["console"],  
         },
     },

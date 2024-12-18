@@ -1,0 +1,90 @@
+{% extends "bases/task.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock head %}
+
+{% block title %}
+Task Detail - TaskSys
+{% endblock title %}
+
+{% block content %}
+<header style="padding: 20px 0; background-color: #f4f4f4; text-align: center;">
+    <nav style="display: flex; justify-content: center; gap: 30px;">
+        <a href="{% url 'task_list_view' %}" style="text-decoration: none; font-weight: bold; color: #333;">List
+            Task</a>
+        <a href="{% url 'task_create_view' %}" style="text-decoration: none; font-weight: bold; color: #333;">New
+            Task</a>
+    </nav>
+</header>
+
+<main style="
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+">
+    <section style="
+        display: flex;
+        justify-content: space-between;
+        gap: 3rem;
+        background-color: #fff;
+        padding: 30px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        width: 100%;
+    ">
+        <!-- Task Detail Section -->
+        <div style="flex: 1; padding-right: 20px; border-right: 1px solid #ddd;">
+            <h1 style="margin-bottom: 15px; font-size: 1.5rem; color: #333;">Task Detail</h1>
+            <div style="margin-bottom: 15px;">
+                <span style="font-weight: bold; font-size: 1rem; color: #555;">Title:</span>
+                <p style="font-size: 1.1rem; color: #333;">{{ object.title }}</p>
+            </div>
+
+            {% if object.description %}
+            <div style="margin-bottom: 15px;">
+                <span style="font-weight: bold; font-size: 1rem; color: #555;">Description:</span>
+                <p style="font-size: 1.1rem; color: #333;">{{ object.description }}</p>
+            </div>
+            {% endif %}
+
+            {% if object.notify_date %}
+            <div>
+                <span style="font-weight: bold; font-size: 1rem; color: #555;">Notification Date:</span>
+                <p style="font-size: 1.1rem; color: #333;">{{ object.notify_date }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Task Edit Section -->
+        <div style="flex: 1; padding-left: 20px;">
+            <h1 style="margin-bottom: 15px; font-size: 1.5rem; color: #333;">Task Edit</h1>
+            <form action="{% url 'task_detail_view' object.uid %}" method="post"
+                style="display: flex; flex-direction: column; gap: 15px;">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div style="text-align: center;">
+                    <input type="submit" value="Save" class="btn btn-primary" style="
+                        background-color: #007bff;
+                        border: none;
+                        color: #fff;
+                        padding: 10px 15px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-size: 1rem;
+                        transition: background-color 0.3s ease;
+                    ">
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock content %}

@@ -3,30 +3,60 @@
 {% load static %}
 
 {% block head %}
-
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock head %}
 
 {% block title %}
-Task Create
+Task Create - TaskSys
 {% endblock title %}
-- TaskSys
 
 {% block content %}
-<header>
-    links:
-
-    <a href="">New Task</a>
+<header style="padding: 20px 0; background-color: #f4f4f4; text-align: center;">
+    <nav style="display: flex; justify-content: center; gap: 30px;">
+        <a href="{% url 'task_list_view' %}" style="text-decoration: none; font-weight: bold; color: #333;">List
+            Task</a>
+        <a href="{% url 'task_create_view' %}" style="text-decoration: none; font-weight: bold; color: #333;">New
+            Task</a>
+    </nav>
 </header>
-<main style="width: 100%;height: 100dvh; display: flex;justify-content: center;align-items: center;flex-direction: column;">
-    <h1>Task Create</h1>
-    <section style="display: flex;flex-direction: column;gap: 10px;">
-    <form action="{% url 'task_create_view' %}" method="POST">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <input type="submit" class="btn btn-success" value="Add Task">
-    </form>
+
+<main style="
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 10px;
+    box-sizing: border-box;
+">
+    <h1 style="margin-bottom: 20px; font-size: 2rem; color: #333;">Create a New Task</h1>
+
+    <section style="
+        width: 100%;
+        max-width: 600px;
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    ">
+        <form action="{% url 'task_create_view' %}" method="POST"
+            style="display: flex; flex-direction: column; gap: 15px;">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div style="text-align: center;">
+                <input type="submit" class="btn btn-success" value="Add Task" style="
+                    background-color: #28a745;
+                    border: none;
+                    color: #fff;
+                    padding: 10px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    transition: background-color 0.3s ease;
+                ">
+            </div>
+        </form>
     </section>
 </main>
-    
-
 {% endblock content %}
