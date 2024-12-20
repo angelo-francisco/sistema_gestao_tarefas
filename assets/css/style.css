@@ -31,3 +31,14 @@ a:hover {
 .card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+#logout {
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+    transition: ease-in 0.3s;
+}
+
+#logout:hover {
+    color: red;
+}

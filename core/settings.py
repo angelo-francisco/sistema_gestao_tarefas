@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*bb9%@_(1!&p02f&=3r^vlw^(##hv=oq#luj(#r093@@m%cfzz"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -100,7 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "en-US"
+LANGUAGE_CODE = "pt-PT"
 
 TIME_ZONE = "Africa/Luanda"
 
@@ -123,7 +123,7 @@ STATIC_ROOT = BASE_DIR.joinpath("staticfiles")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = reverse_lazy("tasks_view")
+LOGIN_REDIRECT_URL = reverse_lazy("task_list_view")
 LOGIN_URL = reverse_lazy("login")
 
 
@@ -151,4 +151,17 @@ LOGGING = {
 }
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = "ebfrqchexncpjcrr"
+EMAIL_HOST_USER = "ics20080729@gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+HANDLER404 = "tasks.views.handler404"
+
+
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_BROKER_URL = "redis://localhost:6380/0"
+CELERY_TIMEZONE = "Africa/Luanda"

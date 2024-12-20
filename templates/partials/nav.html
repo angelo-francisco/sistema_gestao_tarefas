@@ -1,8 +1,9 @@
-<header>
-    <div>
-        <h1 style="font-weight: 560;">TaskSys</h1>
-    </div>
-    <div>
-        <a href="{% url 'logout' %}" class="btn btn-danger">logout</a>
-    </div>
+<header style="padding: 20px 0; background-color: #f4f4f4; text-align: center;">
+    <nav style="display: flex; justify-content: center; gap: 30px;">
+        <a href="{% url 'task_list_view' %}" style="text-decoration: none; font-weight: bold; color: #333;">List
+            Task</a>
+        <a href="{% url 'task_create_view' %}" style="text-decoration: none; font-weight: bold; color: #333;">New
+            Task</a>
+        <a href="{% url 'logout' %}" id="logout">Logout</a>
+    </nav>
 </header>

@@ -1,22 +1,14 @@
-import logging
-
-from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic.detail import DetailView
+from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, DeleteView
 from django.views.generic.list import ListView
 
 from .forms import TaskForm
 from .models import Task
-
-logger = logging.getLogger(__name__)
-
-only_logged_users = login_required(login_url=settings.LOGIN_URL)
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -34,7 +26,9 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = "tasks/task_create.html"
-    success_url = reverse_lazy("task_list_view")
+
+    def get_success_url(self):
+        return reverse("task_list_view")
 
     def form_valid(self, form):
         task = form.save(commit=False)
@@ -45,7 +39,10 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
-    success_url = reverse_lazy("task_list_view")
+
+    def get_success_url(self):
+        success_url = reverse("task_list_view")
+        return success_url
 
     def get_object(self, queryset=None):
         uid = self.kwargs.get("uid")
@@ -58,33 +55,24 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class TaskDetailView(LoginRequiredMixin, DetailView):
-    model = Task
+@login_required
+def TaskDetailView(request, uid):
+    ctx = {}
     template_name = "tasks/task_detail.html"
-    after_submit_form = reverse_lazy("task_detail_view")
+    task = Task.objects.get(uid=uid)
 
-    def get_after_submit_form_url(self):
-        return self.after_submit_form
-
-    def get_object(self, queryset=None):
-        uid = self.kwargs.get("uid")
-        return Task.objects.get(uid=uid)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        task = self.get_object()
-        context["form"] = TaskForm(instance=task)
-        return context
-
-    def post(self, request, *args, **kwargs):
-        task = self.get_object()
+    if request.method == "POST":
         form = TaskForm(request.POST, instance=task)
-
         if form.is_valid():
             form.save()
+            
             return redirect("task_detail_view", uid=task.uid)
-        return self.render_to_response(self.get_context_data(form=form))
+    else:
+        form = TaskForm(instance=task)
+
+    ctx["form"] = form
+    ctx["object"] = task
+    return render(request, template_name, ctx)
 
 
 @csrf_exempt

@@ -5,21 +5,20 @@
 {% block head %}
     
 {% endblock head %}
-    
 
 {% block title %} 
-    {{title}}
+    Logout
 {% endblock title %}
 
 {% block content %}
     <h1>LogOut</h1>
 
-    <form action="" method="post">
+    <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
         <p>Are you sure about finish your session?</p>
 
         <div>
-            <input type="submit" value="Cancel" class="btn btn-gray">
+            <a href="{% url 'task_list_view' %}" class="btn btn-gray">Cancel</a>
             <input type="submit" value="Logout" class="btn btn-danger">
         </div>
 

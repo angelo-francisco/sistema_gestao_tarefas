@@ -1,6 +1,13 @@
 from django.urls import path, reverse_lazy
-from django.contrib.auth.views import LogoutView
-from .views import SignupView, LoginView
+
+from .views import (
+    LoginView,
+    LogoutView,
+    SignupView,
+    forgot_password,
+    reset_password_by_code,
+    verify_code,
+)
 
 
 urlpatterns = [
@@ -20,10 +27,14 @@ urlpatterns = [
     ),
     path(
         "logout/",
-        LogoutView.as_view(
-            template_name="registration/logout.html",
-            next_page=reverse_lazy("login"),
-        ),
+        LogoutView.as_view(),
         name="logout",
+    ),
+    path("forgot_password/", forgot_password, name="forgot_password"),
+    path("verify_code/", verify_code, name="verify_code"),
+    path(
+        "reset_password_by_code/<code_hash>/",
+        reset_password_by_code,
+        name="reset_password_by_code",
     ),
 ]

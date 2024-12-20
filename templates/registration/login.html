@@ -13,15 +13,18 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>Login</h1>
+    <h1 style="text-align: center;">Login</h1>
 
     <form action="" method="post">
         {% csrf_token %}
         {{ form|crispy }}
 
         <p>Haven't account? <a href="{% url 'signup' %}">Signup</a></p>
-        <input type="submit" value="login" class="btn btn-primary">
-
+        <div style="display: flex;justify-content: center;
+        align-items: center;flex-direction: column;">
+            <input type="submit" value="login" class="btn btn-primary" style="width: 80%;">
+            <p><a href="{% url 'forgot_password' %}">Reset Password</a></p>
+        </div>
     </form>
 {% endblock content %}
     

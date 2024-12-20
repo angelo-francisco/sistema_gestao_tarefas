@@ -14,6 +14,96 @@
 
     {% endblock head %}
 
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: whitesmoke;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            width: 27rem;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 50ms;
+            animation: fadeInUp 0.6s ease-out;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        main:hover {
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
+        }
+
+        h1 {
+            font-weight: 550;
+            font-size: 30px;
+        }
+
+        .messages-container {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            z-index: 9999;
+        }
+
+        .message {
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .alert-success {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .alert-error {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .alert-info {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .alert-warning {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+
     <title>
 
         {% block title %}
@@ -25,6 +115,7 @@
 </head>
 
 <body>
+    {% include 'partials/msg.html' %}
     <main>
         {% block content %}
 
@@ -37,6 +128,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let messages = document.querySelectorAll('.message');
+
+            messages.forEach(function (message) {
+                setTimeout(function () {
+                    message.style.opacity = 0;
+                    setTimeout(function () {
+                        message.remove();
+                    }, 500);
+                }, 5000);
+            });
+        });
+    </script>
 
 </body>
 

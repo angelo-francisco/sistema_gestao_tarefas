@@ -15,12 +15,12 @@ def new_task_or_task_updated(sender, instance, created, **kwargs):
             msg=f"New task with ID {instance.id}, title: {instance.title}, creator: {instance.user.username} has been created"
         )
     return logger.info(
-        msg=f"Task with ID {instance.id}, title: {instance.title}, creator: {instance.user.username} was modified."
+        msg=f"Task with ID {instance.id}, title: {instance.title} was modified."
     )
 
 
 @receiver(post_delete, sender=Task, dispatch_uid="del_task_handler")
 def del_task_handler(sender, instance, **kwargs):
     logger.info(
-        f"Task with ID {instance.id}, title: {instance.title}, creator: {instance.user.username} was deleted"
+        f"Task with ID {instance.id}, title: {instance.title} was deleted"
     )

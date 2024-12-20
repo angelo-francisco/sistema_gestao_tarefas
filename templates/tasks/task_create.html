@@ -11,14 +11,8 @@ Task Create - TaskSys
 {% endblock title %}
 
 {% block content %}
-<header style="padding: 20px 0; background-color: #f4f4f4; text-align: center;">
-    <nav style="display: flex; justify-content: center; gap: 30px;">
-        <a href="{% url 'task_list_view' %}" style="text-decoration: none; font-weight: bold; color: #333;">List
-            Task</a>
-        <a href="{% url 'task_create_view' %}" style="text-decoration: none; font-weight: bold; color: #333;">New
-            Task</a>
-    </nav>
-</header>
+
+{% include 'partials/nav.html' %}
 
 <main style="
     width: 100%;

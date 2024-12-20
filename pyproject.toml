@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "sistema-gestao-tarefas"
+name = "sistema-gestao-tarefas-venv2"
 version = "0.1.0"
 description = ""
 authors = ["angelo-francisco <ics20080729@gmail.com>"]
@@ -9,12 +9,11 @@ readme = "README.md"
 python = "^3.12"
 django = "^5.1.4"
 taskipy = "^1.14.1"
-django-livereload = "^1.7"
 crispy-bootstrap5 = "^2024.10"
 django-crispy-forms = "^2.3"
+celery = {extras = ["redis"], version = "^5.4.0"}
 flower = "^2.0.1"
-pytz = "^2024.2"
-celery = "^5.4.0"
+twilio = "^9.4.1"
 
 
 [tool.taskipy.tasks]

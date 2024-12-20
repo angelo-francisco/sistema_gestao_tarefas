@@ -9,13 +9,9 @@
 Task List - TaskSys
 {% endblock title %}
 
-{% block content %}
-<header style="margin-bottom: 20px;">
-    <nav style="display: flex; justify-content: center; gap: 20px;">
-        <a href="{% url 'task_list_view' %}" style="text-decoration: none; font-weight: bold;">List Task</a>
-        <a href="{% url 'task_create_view' %}" style="text-decoration: none; font-weight: bold;">New Task</a>
-    </nav>
-</header>
+{% block content %} 
+
+{% include 'partials/nav.html' %}
 
 <main style="width: 100%; height: 100dvh; display: flex;align-items: center;flex-direction: column;">
     <h1 style="margin-bottom: 20px;">Task List</h1>
