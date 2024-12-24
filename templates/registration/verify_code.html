@@ -1,0 +1,104 @@
+{% extends 'bases/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+<style>
+    .pin-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    #pin {
+        width: 100%;
+        max-width: 300px;
+        height: 45px;
+        font-size: 20px;
+        text-align: center;
+        margin-top: 10px;
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    #pin:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    }
+
+    .form-container {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .btn-submit {
+        width: 100%;
+        max-width: 300px;
+        padding: 12px;
+        font-size: 18px;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .btn-submit:hover {
+        background-color: #45a049;
+    }
+
+    p {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    p a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    p a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock head %}
+
+{% block title %}
+Verify Code
+{% endblock title %}
+
+{% block content %}
+<h1 style="text-align: center; font-size: 2rem; margin-bottom: 20px;">Verify Your Code</h1>
+
+<div class="form-container">
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <div class="pin-container">
+            <label for="pin" style="margin-bottom: 8px; font-size: 1.1rem;color: rgba(0, 0, 0, 0.593);">Enter your
+                PIN</label>
+            {{ form|crispy }}
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Verify" class="btn-submit">
+        </div>
+
+        <p>Return to <a href="{% url 'login' %}">Login</a></p>
+    </form>
+</div>
+
+<script>
+    let pin = document.getElementById("pin");
+
+    pin.addEventListener("input", function () {
+        pin.value = pin.value.toUpperCase();
+    });
+</script>
+{% endblock content %}

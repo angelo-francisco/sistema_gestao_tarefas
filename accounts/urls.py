@@ -7,6 +7,7 @@ from .views import (
     forgot_password,
     reset_password_by_code,
     verify_code,
+    reset_password_by_email
 )
 
 
@@ -37,4 +38,9 @@ urlpatterns = [
         reset_password_by_code,
         name="reset_password_by_code",
     ),
+    path(
+        "reset_password_by_email/<uuid>/<token>/",
+        reset_password_by_email,
+        name="reset_password_by_email"
+    )
 ]
