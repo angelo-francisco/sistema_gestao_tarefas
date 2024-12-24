@@ -18,8 +18,8 @@ gitignore-cli = "^1.0.4"
 gunicorn = "^23.0.0"
 whitenoise = "^6.8.2"
 django-environ = "^0.11.2"
-psycopg2 = "^2.9.10"
 dj-database-url = "^2.3.0"
+psycopg2-binary = "^2.9.10"
 
 
 [tool.taskipy.tasks]
