@@ -15,6 +15,7 @@ celery = {extras = ["redis"], version = "^5.4.0"}
 flower = "^2.0.1"
 twilio = "^9.4.1"
 gitignore-cli = "^1.0.4"
+python-decouple = "^3.8"
 
 
 [tool.taskipy.tasks]

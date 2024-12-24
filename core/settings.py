@@ -2,14 +2,17 @@ from pathlib import Path
 
 from django.urls import reverse_lazy
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+from decouple import AutoConfig
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+config = AutoConfig(search_path=BASE_DIR.joinpath("secrets", ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-*bb9%@_(1!&p02f&=3r^vlw^(##hv=oq#luj(#r093@@m%cfzz"
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -150,18 +153,24 @@ LOGGING = {
     },
 }
 
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_HOST_PASSWORD = "ebfrqchexncpjcrr"
-EMAIL_HOST_USER = "ics20080729@gmail.com"
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-
 HANDLER404 = "tasks.views.handler404"
 
 
-CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
-CELERY_BROKER_URL = "redis://localhost:6380/0"
-CELERY_TIMEZONE = "Africa/Luanda"
+EMAIL_BACKEND = config("EMAIL_BACKEND")
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_PORT = config("EMAIL_PORT", cast=int)
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
+EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool)
+
+
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = config("CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP", cast=bool)
+CELERY_BROKER_URL = config("CELERY_BROKER_URL")
+CELERY_TIMEZONE = config("CELERY_TIMEZONE")
+
+
+TWILIO_USERNAME = config("TWILIO_USERNAME")
+TWILIO_PASSWORD = config("TWILIO_PASSWORD")
+TWILIO_TO = config("TWILIO_TO")
+TWILIO_FROM = config("TWILIO_FROM")
