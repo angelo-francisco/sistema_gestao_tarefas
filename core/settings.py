@@ -2,17 +2,18 @@ from pathlib import Path
 
 from django.urls import reverse_lazy
 
-from decouple import AutoConfig
+import environ
 
+env = environ.Env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-config = AutoConfig(search_path=BASE_DIR.joinpath("secrets", ".env"))
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -156,21 +157,21 @@ LOGGING = {
 HANDLER404 = "tasks.views.handler404"
 
 
-EMAIL_BACKEND = config("EMAIL_BACKEND")
-EMAIL_HOST = config("EMAIL_HOST")
-EMAIL_PORT = config("EMAIL_PORT", cast=int)
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
-EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool)
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env.int("EMAIL_PORT", default=587)
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
+EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL", default=False)
 
 
-CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = config("CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP", cast=bool)
-CELERY_BROKER_URL = config("CELERY_BROKER_URL")
-CELERY_TIMEZONE = config("CELERY_TIMEZONE")
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = env("CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP", default=True)
+CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+CELERY_TIMEZONE = env("CELERY_TIMEZONE")
 
 
-TWILIO_USERNAME = config("TWILIO_USERNAME")
-TWILIO_PASSWORD = config("TWILIO_PASSWORD")
-TWILIO_TO = config("TWILIO_TO")
-TWILIO_FROM = config("TWILIO_FROM")
+TWILIO_USERNAME = env("TWILIO_USERNAME")
+TWILIO_PASSWORD = env("TWILIO_PASSWORD")
+TWILIO_TO = env("TWILIO_TO")
+TWILIO_FROM = env("TWILIO_FROM")
